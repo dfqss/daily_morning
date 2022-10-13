@@ -5,6 +5,7 @@ from wechatpy.client.api import WeChatMessage, WeChatTemplate
 import requests
 import os
 import random
+import json
 
 today = datetime.now()
 start_date = os.environ['START_DATE']
@@ -34,10 +35,19 @@ def get_birthday():
   return (next - today).days
 
 def get_words():
-  words = requests.get("https://api.shadiao.pro/chp")
-  if words.status_code != 200:
-    return get_words()
-  return words.json()['data']['text']
+  f = open("phrase.txt", encoding = "utf-8")
+  list = []
+  for line in f:
+    list.append(line)
+  f.close()
+  print(list[0])
+  return list[0]
+  
+  
+  #words = requests.get("https://api.shadiao.pro/chp")
+  #if words.status_code != 200:
+    #return get_words()
+  #return words.json()['data']['text']
 
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
