@@ -35,15 +35,27 @@ def get_birthday():
   return (next - today).days
 
 def get_words():
-  f = open("phrase.txt", encoding = "utf-8")
-  list = []
-  for line in f:
-    list.append(line)
-  f.close()
-  print(list[0])
-  return list[0]
-  
-  
+  # 读取文本内容
+  read_file = open("phrase.txt", encoding="utf-8")
+  phrases = []
+  # 将文本中的字符串存入短语集合中
+  for line in read_file:
+    phrases.append(line)
+  # 将删去首行的文本重新写入
+  count = 0
+  new_phrases = []
+  for phrase in phrases:
+    if count == 0:
+      # print('首行：' + phrase)
+      count += 1
+      continue
+    new_phrases.append(phrase)
+  read_file.close()
+  # 写入新的文本内容
+  write_file = open("phrase.txt", encoding="utf-8", mode='w')
+  write_file.write(''.join(new_phrases))
+  write_file.close()
+  return phrases[0]
   #words = requests.get("https://api.shadiao.pro/chp")
   #if words.status_code != 200:
     #return get_words()
